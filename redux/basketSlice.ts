@@ -1,37 +1,49 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '../../app/store'
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { useState } from "react";
+import { RootState } from "./store";
 
 // Define a type for the slice state
-interface CounterState {
-  value: number
+export interface BasketState {
+  items: Product[];
 }
 
 // Define the initial state using that type
-const initialState: CounterState = {
-  value: 0
-}
+const initialState: BasketState = {
+  items: [],
+};
 
-export const counterSlice = createSlice({
-  name: 'counter',
+export const basketSlice = createSlice({
+  name: "basket",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    increment: state => {
-      state.value += 1
+    addToBasket: (state: BasketState, action: PayloadAction<Product>) => {
+      state.items = [...state.items, action.payload];
     },
-    decrement: state => {
-      state.value -= 1
+    removeFromBasket: (
+      state: BasketState,
+      action: PayloadAction<{ id: string }>
+    ) => {
+      const index = state.items.findIndex(
+        (item: Product) => item._id === action.payload.id
+      );
+
+      let newBasket = [...state.items];
+      if (index >= 0) {
+        newBasket.splice(index, 1);
+      } else {
+        console.log(
+          `Can't remove product (id: ${action.payload.id}) as it's not in basket!`
+        );
+      }
+      state.items = newBasket;
     },
-    // Use the PayloadAction type to declare the contents of `action.payload`
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload
-    }
-  }
-})
+  },
+});
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions
+export const { addToBasket, removeFromBasket } = basketSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
-export const selectCount = (state: RootState) => state.counter.value
+//Selector
+export const selectBasketItems = (state: RootState) => state.basket.items;
 
-export default counterSlice.reducer
+export default basketSlice.reducer;
