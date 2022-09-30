@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { addToBasket } from "../redux/basketSlice";
 import { urlFor } from "../sanity";
+import Currency from "react-currency-formatter";
 
 interface Props {
   product: Product;
@@ -33,7 +34,7 @@ function Product({ product }: Props) {
       <div className="flex flex-1 items-center justify-between space-x-3">
         <div className="space-y-2 text-xl text-white md:text-2xl">
           <p>{product.title}</p>
-          <p>{product.price}</p>
+          <p> <Currency quantity={product.price} currency="USD" /></p>
         </div>
 
         <div
