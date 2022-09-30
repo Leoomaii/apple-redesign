@@ -16,7 +16,7 @@ export default async function handler(
     // This is the shape in which stripe expects the data to be
     const transformedItems = items.map((item) => ({
       price_data: {
-        currency: "aud",
+        currency: "usd",
         product_data: {
           name: item.title,
           images: [urlFor(item.image[0]).url()],
@@ -25,10 +25,14 @@ export default async function handler(
       },
       quantity: 1,
     }));
+
     try {
       // Create Checkout Sessions from body params
       const params: Stripe.Checkout.SessionCreateParams = {
         payment_method_types: ["card"],
+        // shipping_address_collection: {
+        //   allowed_countries: ["US", "CA", "GB"],
+        // },
         line_items: transformedItems,
         payment_intent_data: {},
         mode: "payment",
@@ -52,4 +56,3 @@ export default async function handler(
     res.status(405).end("Method Not Allowed");
   }
 }
-
