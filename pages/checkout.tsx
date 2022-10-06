@@ -72,7 +72,7 @@ function Checkout() {
           <h1 className="my-4 text-3xl font-semibold lg:text-4xl">
             {items.length > 0 ? "Review your bag." : "Your bag is empty."}
           </h1>
-          <p className="my-4">Free delivery and returns.</p>
+          <p className="my-4">Free delivery and returns on selected items.</p>
 
           {items.length === 0 && (
             <Button
@@ -94,19 +94,19 @@ function Checkout() {
                   <div className="flex justify-between">
                     <p>Subtotal</p>
                     <p>
-                      <Currency quantity={basketTotal} currency="USD" />
+                      <Currency quantity={basketTotal} currency="AUD" />
                     </p>
                   </div>
                   <div className="flex justify-between">
                     <p>Shipping</p>
-                    <p>FREE</p>
+                    <p>$20</p>
                   </div>
                   <div className="flex justify-between">
                     <div className="flex flex-col gap-x-1 lg:flex-row">
                       Includes GST
                     </div>
                     <p>
-                      <Currency quantity={basketTotal * 0.1} currency="USD" />
+                      <Currency quantity={basketTotal * 0.1} currency="AUD" />
                     </p>
                   </div>
                 </div>
@@ -114,7 +114,7 @@ function Checkout() {
                 <div className="flex justify-between pt-4 text-xl font-semibold">
                   <h4>Total</h4>
                   <h4>
-                    <Currency quantity={basketTotal} currency="USD" />
+                    <Currency quantity={basketTotal + 20} currency="AUD" />
                   </h4>
                 </div>
               </div>
@@ -143,7 +143,7 @@ function Checkout() {
                     <h4 className="mb-4 flex flex-col text-xl font-semibold">
                       Pay in full
                       <span>
-                        <Currency quantity={basketTotal} currency="USD" />
+                        <Currency quantity={basketTotal + 20} currency="AUD" />
                       </span>
                     </h4>
 

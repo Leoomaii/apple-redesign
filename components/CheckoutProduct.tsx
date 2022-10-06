@@ -50,7 +50,7 @@ const dispatch = useDispatch()
           <h4 className="text-xl font-semibold lg:text-2xl">
             <Currency
               quantity={items.reduce((total, item) => total + item.price, 0)}
-              currency="USD"
+              currency="AUD"
             />
           </h4>
           <button
